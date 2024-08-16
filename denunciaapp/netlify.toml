@@ -1,19 +1,10 @@
 [build]
      command = "npm run build"
      publish = ".next"
+     base = "denunciaapp"
 
    [[plugins]]
      package = "@netlify/plugin-nextjs"
      
     [output]
-     dir = ".next"
-
-     [
-build
-]
-  base = "C:\Users\LUIS\Desktop\projeto3\denunciaapp"
-[
-build
-]
-  command = "npm run build"
-  publish = ".next"
+     dir = ".next"git a
