@@ -28,7 +28,7 @@ const ComplaintApp = () => {
               Tipo de Irregularidade
             </label>
             <select 
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
               value={complaint.type}
               onChange={(e) => setComplaint({...complaint, type: e.target.value})}
               required
@@ -46,7 +46,7 @@ const ComplaintApp = () => {
               Descrição
             </label>
             <textarea 
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
               rows={3}
               value={complaint.description}
               onChange={(e) => setComplaint({...complaint, description: e.target.value})}
@@ -60,7 +60,7 @@ const ComplaintApp = () => {
             </label>
             <input 
               type="text"
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
               placeholder="Endereço ou coordenadas"
               value={complaint.location}
               onChange={(e) => setComplaint({...complaint, location: e.target.value})}
@@ -76,7 +76,7 @@ const ComplaintApp = () => {
           </div>
 
           <button 
-            type="submit" 
+            type="submit"
             className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 flex items-center justify-center"
           >
             <Send className="mr-2" size={20} />
@@ -87,7 +87,7 @@ const ComplaintApp = () => {
         <Alert className="mt-4">
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Atenção</AlertTitle>
-          <AlertDescription>
+          <AlertDescription className="text-gray-700">
             Use este serviço com responsabilidade. Denúncias falsas podem resultar em penalidades.
           </AlertDescription>
         </Alert>
