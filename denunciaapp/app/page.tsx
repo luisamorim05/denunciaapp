@@ -11,11 +11,10 @@ const ComplaintApp = () => {
     location: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Lógica para enviar a denúncia
     alert('Denúncia enviada com sucesso!');
-    setComplaint({ type: '', description: '', location: '' });
   };
 
   return (
