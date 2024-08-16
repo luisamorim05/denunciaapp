@@ -16,4 +16,4 @@ build
 build
 ]
   command = "npm run build"
-  publish = "/PROJETO3/denunciaapp/.next"
+  publish = "C:\Users\LUIS\Desktop\projeto3\denunciaapp.next"
