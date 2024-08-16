@@ -1,10 +1,10 @@
 [build]
-     command = "npm run build"
-     publish = ".next"
-     base = "denunciaapp"
+  command = "npm run build"
+  publish = ".next"
+  base = "denunciaapp"
 
-   [[plugins]]
-     package = "@netlify/plugin-nextjs"
-     
-    [output]
-     dir = ".next"git a
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[output]
+  dir = ".next"
