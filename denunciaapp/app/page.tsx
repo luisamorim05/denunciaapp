@@ -47,7 +47,7 @@ const ComplaintApp = () => {
             </label>
             <textarea 
               className="w-full p-2 border border-gray-300 rounded-md"
-              rows="3"
+              rows={3}
               value={complaint.description}
               onChange={(e) => setComplaint({...complaint, description: e.target.value})}
               required
