@@ -11,9 +11,9 @@
      [
 build
 ]
-  base = "denunciaapp"
+  base = "C:\Users\LUIS\Desktop\projeto3\denunciaapp"
 [
 build
 ]
   command = "npm run build"
-  publish = "C:\Users\LUIS\Desktop\projeto3\denunciaapp.next"
+  publish = ".next"
