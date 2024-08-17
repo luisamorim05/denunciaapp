@@ -1,20 +1,62 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { AlertTriangle, Send, Camera } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-const ComplaintApp = () => {
-  const [complaint, setComplaint] = useState({
+interface Complaint {
+  type: string;
+  description: string;
+  location: string;
+}
+
+const ComplaintApp: React.FC = () => {
+  const [complaint, setComplaint] = useState<Complaint>({
     type: '',
     description: '',
     location: '',
   });
+  const [photo, setPhoto] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [showCamera, setShowCamera] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Lógica para enviar a denúncia
     alert('Denúncia enviada com sucesso!');
+  };
+
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      setShowCamera(true);
+    } catch (err) {
+      console.error("Erro ao acessar a câmera:", err);
+    }
+  };
+
+  const capturePhoto = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      canvas.getContext('2d')?.drawImage(videoRef.current, 0, 0);
+      const photoDataUrl = canvas.toDataURL('image/jpeg');
+      setPhoto(photoDataUrl);
+      setShowCamera(false);
+      stopCamera();
+    }
+  };
+
+  const stopCamera = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop());
+    }
   };
 
   return (
@@ -27,7 +69,7 @@ const ComplaintApp = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Tipo de Irregularidade
             </label>
-            <select 
+            <select
               className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
               value={complaint.type}
               onChange={(e) => setComplaint({...complaint, type: e.target.value})}
@@ -45,7 +87,7 @@ const ComplaintApp = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Descrição
             </label>
-            <textarea 
+            <textarea
               className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
               rows={3}
               value={complaint.description}
@@ -58,7 +100,7 @@ const ComplaintApp = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Localização
             </label>
-            <input 
+            <input
               type="text"
               className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
               placeholder="Endereço ou coordenadas"
@@ -69,13 +111,43 @@ const ComplaintApp = () => {
           </div>
 
           <div className="mb-4">
-            <button type="button" className="flex items-center text-blue-600 hover:text-blue-800">
-              <Camera className="mr-2" size={20} />
-              Anexar foto
-            </button>
+            {!showCamera && !photo && (
+              <button 
+                type="button" 
+                className="flex items-center text-blue-600 hover:text-blue-800"
+                onClick={startCamera}
+              >
+                <Camera className="mr-2" size={20} />
+                Anexar foto
+              </button>
+            )}
+            {showCamera && (
+              <div>
+                <video ref={videoRef} autoPlay className="w-full mb-2"/>
+                <button 
+                  type="button" 
+                  className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
+                  onClick={capturePhoto}
+                >
+                  Capturar Foto
+                </button>
+              </div>
+            )}
+            {photo && (
+              <div>
+                <img src={photo} alt="Foto capturada" className="w-full mb-2"/>
+                <button 
+                  type="button" 
+                  className="text-red-600 hover:text-red-800"
+                  onClick={() => setPhoto(null)}
+                >
+                  Remover Foto
+                </button>
+              </div>
+            )}
           </div>
 
-          <button 
+          <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 flex items-center justify-center"
           >
